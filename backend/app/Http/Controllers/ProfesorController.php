@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class ProfesorController extends Controller
 {
+    // Obtener la lista de todos los profesores
     public function index()
     {
         return response()->json(Profesor::all());
     }
+    // Obtener el horario de un profesor por su CI
     public function horario($ci)
     {
     $horario = DB::table('clase')

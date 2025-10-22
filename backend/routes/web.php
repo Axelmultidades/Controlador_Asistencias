@@ -9,5 +9,5 @@ Route::get('/test-db', function () {
 });
 
 // Ruta para listar profesores
-Route::get('/api/profesores', [ProfesorController::class, 'index']);
-Route::get('/api/horario/{ci}', [ProfesorController::class, 'horario']);
+//Route::get('/api/profesores', [ProfesorController::class, 'index']);
+//Route::get('/api/horario/{ci}', [ProfesorController::class, 'horario']);

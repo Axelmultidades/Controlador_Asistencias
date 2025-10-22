@@ -14,3 +14,4 @@ class Profesor extends Model
 
     protected $fillable = ['ci', 'nombre', 'telefono'];
 }
+

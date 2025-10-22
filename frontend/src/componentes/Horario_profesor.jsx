@@ -14,7 +14,7 @@ function HorarioProfesor({ ci }) {
     <div>
       <h2>Horario del Profesor CI: {ci}</h2>
       <table border="1">
-        <thead>
+        <thead>   
           <tr>
             <th>Día</th>
             <th>Hora Inicial</th>
