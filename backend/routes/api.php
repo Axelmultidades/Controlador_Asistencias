@@ -8,7 +8,7 @@ use App\Http\Controllers\GestionarAulas; // ✅ corregido
 use App\Http\Controllers\HorarioController; // ✅ corregido
 // Rutas API para funciones de profesor
 Route::get('/horario/{ci}', [ProfesorController::class, 'horario']);
-
+Route::get('/profesores', [ProfesorController::class, 'index']);
 // Rutas API para autenticación de usuarios
 Route::post('/login', [UsuarioController::class, 'login']);
 Route::post('/logout', [UsuarioController::class, 'logout']);
@@ -20,6 +20,7 @@ Route::post('/profesor', [GestionarDocenteController::class, 'store']);
 Route::get('/profesor/{ci}', [GestionarDocenteController::class, 'show']);
 Route::put('/profesor/{ci}', [GestionarDocenteController::class, 'update']);
 Route::delete('/profesor/{ci}', [GestionarDocenteController::class, 'destroy']);
+Route::get('/profesor/{ci}/materias', [GestionarDocenteController::class, 'Docente_Materia']);
 
 // Rutas API de gestionar aulas
 Route::prefix('aula')->group(function () {

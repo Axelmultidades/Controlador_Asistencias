@@ -12,12 +12,11 @@ class GestionarDocenteController extends Controller
         $profesor = Profesor::findOrFail($ci);
 
         $request->validate([
-            'ci' => 'required|integer|unique:profesor,ci,' . $ci . ',ci',
-            'nombre' => 'required|string|max:20',
-            'telefono' => 'required|integer',
+        'nombre' => 'required|string|max:20',
+        'telefono' => 'required|integer',
         ]);
 
-        $profesor->update($request->only(['ci', 'nombre', 'telefono']));
+        $profesor->update($request->only(['nombre', 'telefono']));
 
         return response()->json([
             'success' => true,
@@ -47,24 +46,36 @@ class GestionarDocenteController extends Controller
 
 public function destroy($ci)
 {
-    $profesor = Profesor::find($ci);
+    try {
+        if (!is_numeric($ci)) {
+            return response()->json(['success' => false, 'message' => 'CI inválido'], 400);
+        }
 
-    if (!$profesor) {
-        return response()->json(['success' => false, 'message' => 'Docente no encontrado'], 404);
-    }
+        $profesor = Profesor::find($ci);
 
-    $tieneClases = DB::table('clase')->where('docente_ci', $ci)->exists();
+        if (!$profesor) {
+            return response()->json(['success' => false, 'message' => 'Docente no encontrado'], 404);
+        }
 
-    if ($tieneClases) {
+        $tieneClases = DB::table('clase')->where('ci_profesor', $ci)->exists();
+
+        if ($tieneClases) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No se puede eliminar: el docente tiene clases asignadas'
+            ], 403);
+        }
+
+        $profesor->delete();
+
+        return response()->json(['success' => true, 'message' => 'Docente eliminado correctamente']);
+    } catch (\Exception $e) {
         return response()->json([
             'success' => false,
-            'message' => 'No se puede eliminar: el docente tiene clases asignadas'
-        ], 403);
+            'message' => 'Error interno al eliminar el docente',
+            'error' => $e->getMessage()
+        ], 500);
     }
-
-    $profesor->delete();
-
-    return response()->json(['success' => true, 'message' => 'Docente eliminado correctamente']);
 }
 
     public function store(Request $request)
@@ -90,8 +101,10 @@ public function destroy($ci)
 
     if ($request->has('buscar')) {
         $buscar = $request->input('buscar');
-        $query->where('nombre', 'ILIKE', "%$buscar%")
-              ->orWhere('ci', '::text', 'ILIKE', "%$buscar%");
+        $query->where(function ($q) use ($buscar) {
+            $q->whereRaw("nombre ILIKE ?", ["%$buscar%"])
+              ->orWhereRaw("CAST(ci AS TEXT) ILIKE ?", ["%$buscar%"]);
+        });
     }
 
     $docentes = $query->orderBy('nombre')->paginate(10);
@@ -106,8 +119,9 @@ public function destroy($ci)
 {
     $materias = DB::table('materia')
         ->join('profesor_materia', 'materia.id', '=', 'profesor_materia.id_materia')
+        ->join('profesor', 'profesor.ci', '=', 'profesor_materia.ci_profesor') // ✅ este JOIN faltaba
         ->where('profesor_materia.ci_profesor', $ci)
-        ->select('materia.nombre','profesor.nombre as docente')
+        ->select('materia.nombre', 'profesor.nombre as docente')
         ->distinct()
         ->get();
 
@@ -115,6 +129,6 @@ public function destroy($ci)
         'success' => true,
         'data' => $materias
     ]);
-    }
+}
 }
 

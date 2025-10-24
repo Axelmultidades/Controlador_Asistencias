@@ -12,6 +12,7 @@ class Profesor extends Model
     protected $keyType = 'integer'; // tipo de dato correcto
 
     protected $fillable = ['ci', 'nombre', 'telefono'];
+    public $timestamps = false;
 }
 
 

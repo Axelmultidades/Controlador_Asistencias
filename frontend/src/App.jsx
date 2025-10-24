@@ -6,7 +6,7 @@ import NavBar from './componentes/Navbar';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Home from './Pages/Home';
-
+import DocentesPage from './Pages/Docente';
 function App() {
   const [usuario, setUsuario] = useState(null);
 
@@ -33,6 +33,8 @@ function App() {
       <Routes>
         {/* Página principal pública */}
         <Route path="/" element={<Home />} />
+
+        <Route path="/docente" element={<DocentesPage />} />
 
         {/* Login y registro: accesibles solo si no hay sesión */}
         <Route
