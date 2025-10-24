@@ -1,0 +1,38 @@
+/* List_profesor.css */
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+ul.profesor-list {
+  list-style: none;
+  padding: 0;
+}
+
+ul.profesor-list li {
+  background-color: #fff;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+ul.profesor-list li .ci {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+ul.profesor-list li .nombre {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+ul.profesor-list li .telefono {
+  font-size: 0.95rem;
+  color: #333;
+}

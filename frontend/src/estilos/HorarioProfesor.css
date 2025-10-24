@@ -1,0 +1,44 @@
+/* HorarioProfesor.css */
+
+.horario-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.horario-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.horario-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.horario-table th,
+.horario-table td {
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.horario-table th {
+  background-color: #2ecc71;
+  color: white;
+  font-weight: bold;
+}
+
+.horario-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Elimina esta regla para evitar el cambio de color al pasar el mouse */
+/* .horario-table tr:hover {
+  background-color: #e0f7e9;
+} */
