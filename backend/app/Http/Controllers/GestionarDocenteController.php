@@ -102,5 +102,19 @@ public function destroy($ci)
     ]);
 }
 
+    public function Docente_Materia($ci)
+{
+    $materias = DB::table('materia')
+        ->join('profesor_materia', 'materia.id', '=', 'profesor_materia.id_materia')
+        ->where('profesor_materia.ci_profesor', $ci)
+        ->select('materia.nombre','profesor.nombre as docente')
+        ->distinct()
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $materias
+    ]);
+    }
 }
 

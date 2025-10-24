@@ -5,7 +5,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\GestionarDocenteController;
 use App\Http\Controllers\GestionarAulas; // ✅ corregido
-
+use App\Http\Controllers\HorarioController; // ✅ corregido
 // Rutas API para funciones de profesor
 Route::get('/horario/{ci}', [ProfesorController::class, 'horario']);
 
@@ -30,6 +30,16 @@ Route::prefix('aula')->group(function () {
     Route::delete('/{id}', [GestionarAulas::class, 'destroy']);
 });
 
+// Rutas API de gestionar horarios
+Route::prefix('horario')->group(function () {
+    Route::post('/', [HorarioController::class, 'store']); // Asignar horario (CU06 + CU07)
+    Route::get('/', [HorarioController::class, 'index']); // Listar todos los horarios
+    Route::get('/docente/{ci}', [HorarioController::class, 'porDocente']); // Horarios por docente
+    Route::get('/grupo/{grupo_id}', [HorarioController::class, 'porGrupo']); // Horarios por grupo
+    Route::get('/aula/{aula_id}', [HorarioController::class, 'porAula']); // Horarios por aula
+    Route::put('/{id}', [HorarioController::class, 'update']); // Editar horario
+    Route::delete('/{id}', [HorarioController::class, 'destroy']); // Eliminar horario
+});
 // Ruta de prueba de conexión a la base de datos
 Route::get('/test-db', function () {
     return \DB::select('SELECT 1 AS test');
