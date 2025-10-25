@@ -9,7 +9,7 @@ function Login({ onLogin }) {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/login', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/login`, {
         codigo: parseInt(codigo),
         password
       }, { withCredentials: true });
