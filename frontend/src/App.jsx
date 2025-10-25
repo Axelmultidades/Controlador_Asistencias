@@ -7,6 +7,9 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Home from './Pages/Home';
 import DocentesPage from './Pages/Docente';
+import AulasPage from './Pages/Aulas';
+import MateriaGrupoPage from './Pages/Materia_Grupo.jsx';
+import AsignarHorarioPage from './Pages/AsignarHorario.jsx';
 function App() {
   const [usuario, setUsuario] = useState(null);
 
@@ -33,9 +36,10 @@ function App() {
       <Routes>
         {/* Página principal pública */}
         <Route path="/" element={<Home />} />
-
+        <Route path="/aulas" element={<AulasPage />} />
         <Route path="/docente" element={<DocentesPage />} />
-
+        <Route path="/materia_grupo" element={<MateriaGrupoPage />} />
+        <Route path="/asignar_horario" element={<AsignarHorarioPage />} />
         {/* Login y registro: accesibles solo si no hay sesión */}
         <Route
           path="/login"
