@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\ProfesorController;
+//use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\GestionarDocenteController;
 use App\Http\Controllers\GestionarAulas; // ✅ corregido
 use App\Http\Controllers\HorarioController; // ✅ corregido
@@ -10,7 +10,7 @@ use App\Http\Controllers\GestionarMateriaGrupoController;
 use App\Http\Controllers\ClaseClaseController;
 // Rutas API para funciones de profesor
 //Route::get('/horario/{ci}', [ProfesorController::class, 'horario']);
-Route::get('/profesores', [ProfesorController::class, 'index']);
+//Route::get('/profesores', [ProfesorController::class, 'index']);
 // Rutas API para autenticación de usuarios
 Route::post('/login', [UsuarioController::class, 'login']);
 Route::post('/logout', [UsuarioController::class, 'logout']);

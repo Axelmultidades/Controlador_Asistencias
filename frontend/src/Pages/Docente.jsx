@@ -7,9 +7,11 @@ export default function DocentesPage() {
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const fetchDocentes = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/api/profesor?buscar=${buscar}&page=${page}`);
+      const res = await fetch(`${API_URL}/api/profesor?buscar=${buscar}&page=${page}`);
       const data = await res.json();
       setDocentes(data.data.data);
       setLastPage(data.data.last_page);
@@ -30,7 +32,7 @@ export default function DocentesPage() {
 
   const verMaterias = async (ci) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/profesor/${ci}/materias`);
+      const res = await fetch(`${API_URL}/api/profesor/${ci}/materias`);
       const data = await res.json();
       if (data.success && data.data.length > 0) {
         alert(`Materias de ${ci}:\n` + data.data.map(m => `• ${m.nombre}`).join('\n'));
@@ -47,7 +49,7 @@ export default function DocentesPage() {
     if (!confirm(`¿Seguro que deseas eliminar al docente con CI ${ci}?`)) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/profesor/${ci}`, {
+      const res = await fetch(`${API_URL}/api/profesor/${ci}`, {
         method: 'DELETE',
       });
       const data = await res.json();
@@ -71,7 +73,7 @@ export default function DocentesPage() {
     if (!nuevoNombre || !nuevoTelefono) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/profesor/${docente.ci}`, {
+      const res = await fetch(`${API_URL}/api/profesor/${docente.ci}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -6,12 +6,14 @@ export default function RegistroDocente({ onRegistroExitoso }) {
   const [telefono, setTelefono] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8000/api/profesor', {
+      const res = await fetch(`${API_URL}/api/profesor`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -6,7 +6,7 @@ function List_profesor() {
   const [profesores, setProfesores] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/profesores')
+    axios.get("${import.meta.env.VITE_API_URL}/api/profesores")
       .then(response => {
         setProfesores(response.data);
       })
