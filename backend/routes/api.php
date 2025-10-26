@@ -68,7 +68,7 @@ Route::prefix('horario')->group(function () {
 });
 
 //ruta de api clase
-Route::get('/clases', [ClaseClaseController::class, 'index']);
+Route::get('/clases', [ClaseClaseController::class, 'aula_docente']);
 Route::post('/clases', [ClaseClaseController::class, 'store']);
 // Ruta de prueba de conexión a la base de datos
 Route::get('/test-db', function () {

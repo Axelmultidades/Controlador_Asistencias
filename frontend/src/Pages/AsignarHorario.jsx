@@ -65,7 +65,7 @@ export default function AsignarHorarioPage() {
           <option value="" disabled>Seleccionar clase</option>
           {clases.map((clase) => (
             <option key={clase.id} value={clase.id}>
-              id_aula {clase.id_aula} – ci_docente {clase.ci_profesor}
+              Aula {clase.numero_aula} – ci_docente {clase.ci_profesor}
             </option>
           ))}
         </select>
