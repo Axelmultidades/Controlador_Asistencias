@@ -6,7 +6,7 @@ function LogoutButton({ onLogout }) {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:8000/api/logout', {}, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/login`, {}, {
         withCredentials: true
       });
 

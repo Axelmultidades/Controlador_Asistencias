@@ -5,7 +5,7 @@ function HorarioProfesor({ ci }) {
   const [horario, setHorario] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/horario/${ci}`)
+    axios.get(`${import.meta.env.VITE_API_URL}/api/horario/${ci}`)
       .then(res => setHorario(res.data))
       .catch(err => console.error('Error al obtener horario:', err));
   }, [ci]);

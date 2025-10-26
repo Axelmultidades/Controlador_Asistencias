@@ -7,9 +7,11 @@ export default function AulasPage() {
   const [idPiso, setIdPiso] = useState('');
   const [estado, setEstado] = useState('');
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const fetchAulas = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/api/aula`);
+      const res = await fetch(`${API_URL}/api/aula`);
       const data = await res.json();
       setAulas(data.data || []);
     } catch (error) {
@@ -24,7 +26,7 @@ export default function AulasPage() {
 
   const handleBuscar = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/api/aula/${estadoBuscar}`);
+      const res = await fetch(`${API_URL}/api/aula/${estadoBuscar}`);
       const data = await res.json();
       if (data.success) {
         setAulas(data.data);
@@ -40,7 +42,7 @@ export default function AulasPage() {
   const registrarAula = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:8000/api/aula`, {
+      const res = await fetch(`${API_URL}/api/aula`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -73,7 +75,7 @@ export default function AulasPage() {
     if (!nuevoNumero || !nuevoPiso || !nuevoEstado) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/aula/${aula.id}`, {
+      const res = await fetch(`${API_URL}/api/aula/${aula.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -99,7 +101,7 @@ export default function AulasPage() {
     if (!confirm('¿Seguro que deseas eliminar esta aula?')) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/aula/${id}`, {
+      const res = await fetch(`${API_URL}/api/aula/${id}`, {
         method: 'DELETE',
       });
       const data = await res.json();

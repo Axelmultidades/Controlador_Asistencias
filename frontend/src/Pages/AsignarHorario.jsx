@@ -7,9 +7,11 @@ export default function AsignarHorarioPage() {
   const [horaInicio, setHoraInicio] = useState('');
   const [horaFin, setHoraFin] = useState('');
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const fetchClases = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/clases');
+      const res = await fetch(`${API_URL}/api/clases`);
       const data = await res.json();
       setClases(data.data || []);
     } catch (err) {
@@ -28,7 +30,7 @@ export default function AsignarHorarioPage() {
     }
 
     try {
-      const res = await fetch('http://localhost:8000/api/horario', {
+      const res = await fetch(`${API_URL}/api/horario`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -47,7 +49,7 @@ export default function AsignarHorarioPage() {
         setHoraFin('');
         setClaseSeleccionada('');
       } else {
-        alert(data.message);
+        alert(data.message || 'No se pudo asignar el horario');
       }
     } catch (err) {
       alert('Error al asignar horario');
@@ -63,7 +65,7 @@ export default function AsignarHorarioPage() {
           <option value="" disabled>Seleccionar clase</option>
           {clases.map((clase) => (
             <option key={clase.id} value={clase.id}>
-               id_aula {clase.id_aula} – ci_docente {clase.ci_profesor}
+              id_aula {clase.id_aula} – ci_docente {clase.ci_profesor}
             </option>
           ))}
         </select>

@@ -1,28 +1,30 @@
 import { useEffect, useState } from 'react';
 
 export default function MateriaGrupoPage() {
-  const [materias, setMaterias] = useState([]); // para tabla con grupos
-  const [materiasDisponibles, setMateriasDisponibles] = useState([]); // para el <select>
+  const [materias, setMaterias] = useState([]);
+  const [materiasDisponibles, setMateriasDisponibles] = useState([]);
   const [nombreMateria, setNombreMateria] = useState('');
   const [nombreGrupo, setNombreGrupo] = useState('');
   const [materiaSeleccionada, setMateriaSeleccionada] = useState('');
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const fetchMaterias = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/materia_grupo/materia');
+      const res = await fetch(`${API_URL}/api/materia_grupo/materia`);
       const data = await res.json();
       setMateriasDisponibles(data.data || []);
-    } catch (err) {
+    } catch {
       alert('Error al cargar materias disponibles');
     }
   };
 
   const fetchMateriasConGrupos = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/materia_grupo/vinculados');
+      const res = await fetch(`${API_URL}/api/materia_grupo/vinculados`);
       const data = await res.json();
       setMaterias(data.data || []);
-    } catch (err) {
+    } catch {
       alert('Error al cargar materias con grupos');
     }
   };
@@ -34,7 +36,7 @@ export default function MateriaGrupoPage() {
 
   const crearMateria = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/materia_grupo/materia', {
+      const res = await fetch(`${API_URL}/api/materia_grupo/materia`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre: nombreMateria }),
@@ -48,7 +50,7 @@ export default function MateriaGrupoPage() {
       } else {
         alert(data.message);
       }
-    } catch (err) {
+    } catch {
       alert('Error al crear materia');
     }
   };
@@ -58,7 +60,7 @@ export default function MateriaGrupoPage() {
     if (!nuevoNombre) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/materia_grupo/materia/${materia.id}`, {
+      const res = await fetch(`${API_URL}/api/materia_grupo/materia/${materia.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre: nuevoNombre }),
@@ -71,7 +73,7 @@ export default function MateriaGrupoPage() {
       } else {
         alert(data.message);
       }
-    } catch (err) {
+    } catch {
       alert('Error al editar materia');
     }
   };
@@ -79,7 +81,7 @@ export default function MateriaGrupoPage() {
   const eliminarMateria = async (id) => {
     if (!confirm('¿Eliminar esta materia?')) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/materia_grupo/materia/${id}`, {
+      const res = await fetch(`${API_URL}/api/materia_grupo/materia/${id}`, {
         method: 'DELETE',
       });
       const data = await res.json();
@@ -90,7 +92,7 @@ export default function MateriaGrupoPage() {
       } else {
         alert(data.message);
       }
-    } catch (err) {
+    } catch {
       alert('Error al eliminar materia');
     }
   };
@@ -99,7 +101,7 @@ export default function MateriaGrupoPage() {
     if (!materiaSeleccionada || !nombreGrupo) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/materia_grupo/materia/${materiaSeleccionada}/grupo`, {
+      const res = await fetch(`${API_URL}/api/materia_grupo/materia/${materiaSeleccionada}/grupo`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre: nombreGrupo }),
@@ -112,7 +114,7 @@ export default function MateriaGrupoPage() {
       } else {
         alert(data.message);
       }
-    } catch (err) {
+    } catch {
       alert('Error al asignar grupo');
     }
   };
@@ -122,7 +124,7 @@ export default function MateriaGrupoPage() {
     if (!nuevoNombre) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/materia_grupo/grupo/${grupoId}`, {
+      const res = await fetch(`${API_URL}/api/materia_grupo/grupo/${grupoId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre: nuevoNombre }),
@@ -134,7 +136,7 @@ export default function MateriaGrupoPage() {
       } else {
         alert(data.message);
       }
-    } catch (err) {
+    } catch {
       alert('Error al editar grupo');
     }
   };
@@ -143,7 +145,7 @@ export default function MateriaGrupoPage() {
     if (!confirm('¿Eliminar este grupo?')) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/materia_grupo/grupo/${grupoId}`, {
+      const res = await fetch(`${API_URL}/api/materia_grupo/grupo/${grupoId}`, {
         method: 'DELETE',
       });
       const data = await res.json();
@@ -153,7 +155,7 @@ export default function MateriaGrupoPage() {
       } else {
         alert(data.message);
       }
-    } catch (err) {
+    } catch {
       alert('Error al eliminar grupo');
     }
   };
@@ -162,7 +164,7 @@ export default function MateriaGrupoPage() {
     if (!confirm('¿Desasignar este grupo de la materia?')) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/api/materia_grupo/materia/${materiaId}/grupo/${grupoId}`, {
+      const res = await fetch(`${API_URL}/api/materia_grupo/materia/${materiaId}/grupo/${grupoId}`, {
         method: 'DELETE',
       });
       const data = await res.json();
@@ -172,7 +174,7 @@ export default function MateriaGrupoPage() {
       } else {
         alert(data.message);
       }
-    } catch (err) {
+    } catch {
       alert('Error al desasignar grupo');
     }
   };
