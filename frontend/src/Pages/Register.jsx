@@ -38,29 +38,35 @@ function Register() {
   };
 
   return (
-    <div className="container">
+    <div className="register-form">
       <h1>Registro de Usuario</h1>
 
-      <input
-        type="number"
-        value={codigo}
-        onChange={e => setCodigo(e.target.value)}
-        placeholder="Código"
-      />
+      <div className="form-group">
+        <input
+          type="number"
+          value={codigo}
+          onChange={e => setCodigo(e.target.value)}
+          placeholder="Código"
+        />
+      </div>
 
-      <input
-        type="text"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-        placeholder="Usuario"
-      />
+      <div className="form-group">
+        <input
+          type="text"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          placeholder="Usuario"
+        />
+      </div>
 
-      <input
-        type="password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        placeholder="Contraseña"
-      />
+      <div className="form-group">
+        <input
+          type="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          placeholder="Contraseña"
+        />
+      </div>
 
       <button onClick={handleRegister} disabled={loading}>
         {loading ? 'Registrando...' : 'Registrar'}

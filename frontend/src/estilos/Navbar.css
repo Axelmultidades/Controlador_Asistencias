@@ -1,8 +1,8 @@
-/* navbar.css */
 nav {
   display: flex;
+  flex-wrap: wrap; /* permite que los enlaces se acomoden en varias líneas si no caben */
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
   padding: 1rem;
   background-color: #d4e6bc;
   border-bottom: 1px solid #ccc;
@@ -15,8 +15,24 @@ nav a {
   padding: 0.5rem 1rem;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  white-space: nowrap; /* evita que el texto se corte en varias líneas */
 }
 
+/* Hover */
 nav a:hover {
   background-color: #7c6464;
+}
+
+/* Responsive: pantallas menores a 600px */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  nav a {
+    width: 100%;
+    text-align: center;
+  }
 }
