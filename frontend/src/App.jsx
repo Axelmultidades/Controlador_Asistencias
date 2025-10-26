@@ -44,31 +44,18 @@ function App() {
         <Route
           path="/login"
           element={
-            usuario ? <Navigate to="/list_profesor" /> : <Login onLogin={handleLogin} />
+            usuario ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
           }
         />
         <Route
           path="/register"
           element={
-            usuario ? <Navigate to="/list_profesor" /> : <Register />
+            usuario ? <Navigate to="/" /> : <Register />
           }
         />
 
-        {/* Rutas protegidas */}
-        <Route
-          path="/list_profesor"
-          element={
-            usuario ? <List_profesor /> : <Navigate to="/login" />
-          }
-        />
-        <Route
-          path="/horario"
-          element={
-            usuario ? <HorarioPage ci={usuario.id} /> : <Navigate to="/login" />
-          }
-        />
+      
 
-        {/* Ruta no encontrada */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

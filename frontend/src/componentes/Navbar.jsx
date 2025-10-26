@@ -8,8 +8,10 @@ function Navbar({ usuario, onLogout }) {
 
       {usuario && (
         <>
-          <Link to="/list_profesor">Profesores</Link> | 
-          <Link to="/horario">Horario</Link> | 
+          <Link to="/aulas">Aulas</Link>
+          <Link to="/docente">Docentes</Link>
+          <Link to="/materia_grupo">Materia y Grupo</Link>
+          <Link to="/asignar_horario">Asignar Horario</Link> |
           <span>Bienvenido, {usuario.username}</span> | 
           <button onClick={onLogout}>Cerrar sesión</button>
         </>
