@@ -14,7 +14,7 @@ function Login({ onLogin }) {
         password
       }, { withCredentials: true });
 
-      onLogin(response.data.usuario); // guarda el usuario en App o Context
+      onLogin(response.data.usuario);
       setMensaje('Inicio de sesión exitoso');
       setCodigo('');
       setPassword('');
@@ -25,25 +25,29 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div className="container">
-      <h1>Iniciar Sesión</h1>
-
-      <input
-        type="number"
-        value={codigo}
-        onChange={e => setCodigo(e.target.value)}
-        placeholder="Código"
-      />
-
-      <input
-        type="password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        placeholder="Contraseña"
-      />
-
-      <button onClick={handleLogin}>Entrar</button>
-      {mensaje && <p>{mensaje}</p>}
+    <div className="login-wrapper">
+      <div className="login-left">
+        <h1>BIENVENIDO</h1>
+      </div>
+      <div className="login-right">
+        <div className="login-form">
+          <h2>Ingresar a su Cuenta</h2>
+          <input
+            type="number"
+            value={codigo}
+            onChange={e => setCodigo(e.target.value)}
+            placeholder="Código"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Contraseña"
+          />
+          <button onClick={handleLogin}>Ingresar</button>
+          {mensaje && <p>{mensaje}</p>}
+        </div>
+      </div>
     </div>
   );
 }

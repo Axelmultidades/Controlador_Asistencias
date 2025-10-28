@@ -31,19 +31,21 @@ export default function DocentesPage() {
   };
 
   const verMaterias = async (ci) => {
-    try {
-      const res = await fetch(`${API_URL}/api/profesor/${ci}/materias`);
-      const data = await res.json();
-      if (data.success && data.data.length > 0) {
-        alert(`Materias de ${ci}:\n` + data.data.map(m => `• ${m.nombre}`).join('\n'));
-      } else {
-        alert(`El docente ${ci} no tiene materias asignadas.`);
-      }
-    } catch (error) {
-      console.error('Error al cargar materias:', error);
-      alert('No se pudieron cargar las materias del docente.');
+  try {
+    const res = await fetch(`${API_URL}/api/profesor/${ci}/materias`);
+    const data = await res.json();
+
+    if (data.success && data.data.length > 0) {
+      const nombreDocente = data.data[0].docente;
+      alert(`Materias de ${nombreDocente}:\n` + data.data.map(m => `• ${m.nombre}`).join('\n'));
+    } else {
+      alert(`El docente con CI ${ci} no tiene materias asignadas.`);
     }
-  };
+  } catch (error) {
+    console.error('Error al cargar materias:', error);
+    alert('No se pudieron cargar las materias del docente.');
+  }
+};
 
   const eliminarDocente = async (ci) => {
     if (!confirm(`¿Seguro que deseas eliminar al docente con CI ${ci}?`)) return;
