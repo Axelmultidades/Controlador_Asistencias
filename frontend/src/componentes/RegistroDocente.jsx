@@ -12,6 +12,8 @@ export default function RegistroDocente({ onRegistroExitoso }) {
     e.preventDefault();
     setLoading(true);
 
+    const telefonoFinal = telefono === '' ? null : parseInt(telefono);
+
     try {
       const res = await fetch(`${API_URL}/api/profesor`, {
         method: 'POST',
@@ -19,7 +21,7 @@ export default function RegistroDocente({ onRegistroExitoso }) {
         body: JSON.stringify({
           ci: parseInt(ci),
           nombre,
-          telefono: parseInt(telefono),
+          telefono: telefonoFinal,
         }),
       });
 
@@ -30,7 +32,7 @@ export default function RegistroDocente({ onRegistroExitoso }) {
         setCi('');
         setNombre('');
         setTelefono('');
-        if (onRegistroExitoso) onRegistroExitoso(); // recarga lista si se pasa callback
+        if (onRegistroExitoso) onRegistroExitoso();
       } else {
         alert(data.message || '❌ No se pudo registrar el docente');
       }
@@ -64,10 +66,9 @@ export default function RegistroDocente({ onRegistroExitoso }) {
         />
         <input
           type="number"
-          placeholder="Teléfono"
+          placeholder="Teléfono (opcional)"
           value={telefono}
           onChange={(e) => setTelefono(e.target.value)}
-          required
           style={{ marginRight: '1rem' }}
         />
         <button type="submit" disabled={loading}>

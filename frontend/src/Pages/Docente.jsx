@@ -31,21 +31,21 @@ export default function DocentesPage() {
   };
 
   const verMaterias = async (ci) => {
-  try {
-    const res = await fetch(`${API_URL}/api/profesor/${ci}/materias`);
-    const data = await res.json();
+    try {
+      const res = await fetch(`${API_URL}/api/profesor/${ci}/materias`);
+      const data = await res.json();
 
-    if (data.success && data.data.length > 0) {
-      const nombreDocente = data.data[0].docente;
-      alert(`Materias de ${nombreDocente}:\n` + data.data.map(m => `• ${m.nombre}`).join('\n'));
-    } else {
-      alert(`El docente con CI ${ci} no tiene materias asignadas.`);
+      if (data.success && data.data.length > 0) {
+        const nombreDocente = data.data[0].docente;
+        alert(`Materias de ${nombreDocente}:\n` + data.data.map(m => `• ${m.nombre}`).join('\n'));
+      } else {
+        alert(`El docente con CI ${ci} no tiene materias asignadas.`);
+      }
+    } catch (error) {
+      console.error('Error al cargar materias:', error);
+      alert('No se pudieron cargar las materias del docente.');
     }
-  } catch (error) {
-    console.error('Error al cargar materias:', error);
-    alert('No se pudieron cargar las materias del docente.');
-  }
-};
+  };
 
   const eliminarDocente = async (ci) => {
     if (!confirm(`¿Seguro que deseas eliminar al docente con CI ${ci}?`)) return;
@@ -70,9 +70,11 @@ export default function DocentesPage() {
 
   const editarDocente = async (docente) => {
     const nuevoNombre = prompt('Nuevo nombre:', docente.nombre);
-    const nuevoTelefono = prompt('Nuevo teléfono:', docente.telefono);
+    const nuevoTelefono = prompt('Nuevo teléfono (dejar vacío para eliminar):', docente.telefono ?? '');
 
-    if (!nuevoNombre || !nuevoTelefono) return;
+    if (!nuevoNombre) return;
+
+    const telefonoFinal = nuevoTelefono === '' ? null : parseInt(nuevoTelefono);
 
     try {
       const res = await fetch(`${API_URL}/api/profesor/${docente.ci}`, {
@@ -81,7 +83,7 @@ export default function DocentesPage() {
         body: JSON.stringify({
           ci: docente.ci,
           nombre: nuevoNombre,
-          telefono: parseInt(nuevoTelefono),
+          telefono: telefonoFinal,
         }),
       });
       const data = await res.json();
@@ -126,7 +128,7 @@ export default function DocentesPage() {
             <tr key={d.ci}>
               <td>{d.ci}</td>
               <td>{d.nombre}</td>
-              <td>{d.telefono}</td>
+              <td>{d.telefono ?? '—'}</td>
               <td>
                 <button onClick={() => verMaterias(d.ci)}>📘 Ver materias</button>{' '}
                 <button onClick={() => editarDocente(d)}>✏️ Editar</button>{' '}

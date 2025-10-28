@@ -196,11 +196,14 @@ export default function MateriaGrupoPage() {
 
       <div style={{ marginBottom: '2rem' }}>
         <select onChange={(e) => setMateriaSeleccionada(e.target.value)} value={materiaSeleccionada}>
-          <option value="" disabled>Seleccionar materia para asignar grupo</option>
-          {materiasDisponibles.map((m, index) => (
-            <option key={m.id ?? `materia-${index}`} value={m.id}>{m.nombre}</option>
-          ))}
-        </select>
+  <option value="" disabled>Seleccionar profesor y materia</option>
+  {materiasDisponibles.map((m, index) => (
+    <option key={m.id ?? `asig-${index}`} value={m.id}>
+      {m.profesor_nombre} – {m.materia_nombre}
+    </option>
+  ))}
+</select>
+
         <input
           type="text"
           placeholder="Nombre del grupo"

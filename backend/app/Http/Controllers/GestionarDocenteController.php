@@ -11,7 +11,7 @@ class GestionarDocenteController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:20',
-            'telefono' => 'required|integer',
+            'telefono' => 'nullabe|integer',
         ]);
 
         $profesor = DB::table('profesor')->where('ci', $ci)->first();
@@ -93,7 +93,7 @@ class GestionarDocenteController extends Controller
         $request->validate([
             'ci' => 'required|integer|unique:profesor,ci',
             'nombre' => 'required|string|max:20',
-            'telefono' => 'required|integer',
+            'telefono' => 'nullabe|integer',
         ]);
 
         DB::table('profesor')->insert([
