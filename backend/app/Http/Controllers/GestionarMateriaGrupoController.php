@@ -228,4 +228,51 @@ class GestionarMateriaGrupoController extends Controller
             'data' => array_values($resultado)
         ]);
     }
+    // ➕ Asignar materia a profesor
+    public function asignarMateriaAProfesor(Request $request)
+{
+    // Validar entrada
+    $request->validate([
+        'id_profesor' => 'required|integer|exists:profesor,id',
+        'id_materia' => 'required|integer|exists:materia,id',
+    ]);
+
+    // Verificar si ya existe la asignación
+    $existe = DB::table('profesor_materia')
+        ->where('id_profesor', $request->id_profesor)
+        ->where('id_materia', $request->id_materia)
+        ->exists();
+
+    if ($existe) {
+        return response()->json([
+            'success' => false,
+            'message' => 'La materia ya está asignada a este profesor'
+        ], 409); // Conflicto
+    }
+
+    // Insertar nueva relación
+    $id = DB::table('profesor_materia')->insertGetId([
+        'id_profesor' => $request->id_profesor,
+        'id_materia' => $request->id_materia,
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Materia asignada correctamente al profesor',
+        'relacion_id' => $id
+    ]);
+}
+public function listarMaterias()
+{
+    $materias = DB::table('materia')
+        ->select('id', 'nombre')
+        ->orderBy('nombre')
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $materias
+    ]);
+}
+
 }
