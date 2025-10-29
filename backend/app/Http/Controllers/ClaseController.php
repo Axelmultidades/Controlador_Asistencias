@@ -19,16 +19,26 @@ class ClaseController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'ci_profesor' => 'required|exists:profesor,ci',
-        'id_aula' => 'required|exists:aula,id',
+        'id_profesor_materia_grupo' => 'required|integer',
+        'numero_aula' => 'required|integer|exists:aula,numero',
         'fecha' => 'required|date',
         'id_horario' => 'nullable|exists:horario,id',
     ]);
 
-    // Insertar clase
+    // Buscar el ID del aula por su número
+    $aula = DB::table('aula')->where('numero', $request->numero_aula)->first();
+
+    if (!$aula) {
+        return response()->json([
+            'success' => false,
+            'message' => 'El número de aula no existe'
+        ], 422);
+    }
+
+    // Insertar clase usando el ID del aula encontrado
     $clase_id = DB::table('clase')->insertGetId([
         'id_profesor_materia_grupo' => $request->id_profesor_materia_grupo,
-        'id_aula' => $request->id_aula,
+        'id_aula' => $aula->id,
         'fecha' => $request->fecha,
         'id_horario' => $request->id_horario,
     ]);
@@ -39,7 +49,6 @@ class ClaseController extends Controller
         'clase_id' => $clase_id
     ]);
 }
-
 // Obtener aulas y docentes vinculados a clases
 public function aula_docente()
 {
@@ -58,6 +67,27 @@ public function aula_docente()
     return response()->json([
         'success' => true,
         'data' => $clases
+    ]);
+}
+// Listar relaciones profesor-materia-grupo
+public function listarRelacionesPMG()
+{
+    $datos = DB::table('profesor_materia_grupo')
+        ->join('profesor_materia', 'profesor_materia_grupo.id_profesor_materia', '=', 'profesor_materia.id')
+        ->join('profesor', 'profesor_materia.ci_profesor', '=', 'profesor.ci')
+        ->join('materia', 'profesor_materia.id_materia', '=', 'materia.id')
+        ->join('grupo', 'profesor_materia_grupo.id_grupo', '=', 'grupo.id')
+        ->select(
+            'profesor_materia_grupo.id as id',
+            'profesor.nombre as profesor',
+            'materia.nombre as materia',
+            'grupo.nombre as grupo'
+        )
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $datos
     ]);
 }
 }

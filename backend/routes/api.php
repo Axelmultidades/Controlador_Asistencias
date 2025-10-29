@@ -60,6 +60,8 @@ Route::prefix('horario')->group(function () {
     Route::post('/', [HorarioController::class, 'asignarHorario']); // CU06 + CU07: Asignar horario a clase
     Route::get('/', [HorarioController::class, 'index']); // Listar todos los horarios
     Route::get('/profesor/{ci}', [HorarioController::class, 'porProfesores']); // Listar horarios con nombres de profesores
+    Route::get('/docente/{ci}', [HorarioController::class, 'porDocente']); // Ver horarios por docente
+    Route::get('/grupo/{grupo_id}', [HorarioController::class, 'porGrupo']); // Ver horarios por grupo
     Route::get('/aula/{aula_id}', [HorarioController::class, 'porAula']); // Ver horarios por aula
     Route::put('/{id}', [HorarioController::class, 'update']); // Editar horario
     Route::delete('/{id}', [HorarioController::class, 'destroy']); // Eliminar horario
@@ -68,6 +70,7 @@ Route::prefix('horario')->group(function () {
 //ruta de api clase
 Route::get('/clases', [ClaseController::class, 'aula_docente']);
 Route::post('/clases', [ClaseController::class, 'store']);
+Route::get('/clases/profesor-materia-grupo', [ClaseController::class, 'listarRelacionesPMG']);
 // Ruta de prueba de conexión a la base de datos
 Route::get('/test-db', function () {
     return \DB::select('SELECT 1 AS test');
