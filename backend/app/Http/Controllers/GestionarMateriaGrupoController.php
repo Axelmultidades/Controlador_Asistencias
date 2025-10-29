@@ -233,13 +233,13 @@ class GestionarMateriaGrupoController extends Controller
 {
     // Validar entrada
     $request->validate([
-        'id_profesor' => 'required|integer|exists:profesor,id',
+        'ci_profesor' => 'required|integer|exists:profesor,id',
         'id_materia' => 'required|integer|exists:materia,id',
     ]);
 
     // Verificar si ya existe la asignación
     $existe = DB::table('profesor_materia')
-        ->where('id_profesor', $request->id_profesor)
+        ->where('ci_profesor', $request->ci_profesor)
         ->where('id_materia', $request->id_materia)
         ->exists();
 
@@ -252,7 +252,7 @@ class GestionarMateriaGrupoController extends Controller
 
     // Insertar nueva relación
     $id = DB::table('profesor_materia')->insertGetId([
-        'id_profesor' => $request->id_profesor,
+        'ci_profesor' => $request->ci_profesor,
         'id_materia' => $request->id_materia,
     ]);
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import AsignarMateria from '../componentes/AsignarMateria';
 export default function MateriaGrupoPage() {
   const [materias, setMaterias] = useState([]);
   const [materiasDisponibles, setMateriasDisponibles] = useState([]);
@@ -194,6 +194,7 @@ export default function MateriaGrupoPage() {
         <button onClick={crearMateria}>➕ Crear Materia</button>
       </div>
 
+      
       <div style={{ marginBottom: '2rem' }}>
         <select onChange={(e) => setMateriaSeleccionada(e.target.value)} value={materiaSeleccionada}>
   <option value="" disabled>Seleccionar profesor y materia</option>
