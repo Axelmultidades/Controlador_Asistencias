@@ -179,78 +179,119 @@ export default function MateriaGrupoPage() {
     }
   };
 
-  return (
-    <div style={{ padding: '2rem' }}>
-      <h2>📚 Materias y Grupos Asignados</h2>
+ return (
+  <div className="p-4 md:p-8">
+    <h2 className="text-2xl font-bold mb-6">📚 Materias y Grupos Asignados</h2>
 
-      <div style={{ marginBottom: '2rem' }}>
-        <input
-          type="text"
-          placeholder="Nombre de materia"
-          value={nombreMateria}
-          onChange={(e) => setNombreMateria(e.target.value)}
-          style={{ marginRight: '1rem' }}
-        />
-        <button onClick={crearMateria}>➕ Crear Materia</button>
-      </div>
+    <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
+      <input
+        type="text"
+        placeholder="Nombre de materia"
+        value={nombreMateria}
+        onChange={(e) => setNombreMateria(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
+      <button
+        onClick={crearMateria}
+        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+      >
+        ➕ Crear Materia
+      </button>
+    </div>
 
-      
-      <div style={{ marginBottom: '2rem' }}>
-        <select onChange={(e) => setMateriaSeleccionada(e.target.value)} value={materiaSeleccionada}>
-  <option value="" disabled>Seleccionar profesor y materia</option>
-  {materiasDisponibles.map((m, index) => (
-    <option key={m.id ?? `asig-${index}`} value={m.id}>
-      {m.profesor_nombre} – {m.materia_nombre}
-    </option>
-  ))}
-</select>
+    <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
+      <select
+        onChange={(e) => setMateriaSeleccionada(e.target.value)}
+        value={materiaSeleccionada}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      >
+        <option value="" disabled>Seleccionar profesor y materia</option>
+        {materiasDisponibles.map((m, index) => (
+          <option key={m.id ?? `asig-${index}`} value={m.id}>
+            {m.profesor_nombre} – {m.materia_nombre}
+          </option>
+        ))}
+      </select>
 
-        <input
-          type="text"
-          placeholder="Nombre del grupo"
-          value={nombreGrupo}
-          onChange={(e) => setNombreGrupo(e.target.value)}
-          style={{ marginLeft: '1rem', marginRight: '1rem' }}
-        />
-        <button onClick={asignarGrupo}>📎 Asignar Grupo</button>
-      </div>
+      <input
+        type="text"
+        placeholder="Nombre del grupo"
+        value={nombreGrupo}
+        onChange={(e) => setNombreGrupo(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
+      <button
+        onClick={asignarGrupo}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+      >
+        📎 Asignar Grupo
+      </button>
+    </div>
 
-      <table border="1" cellPadding="8" style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
+    <div className="overflow-x-auto">
+      <table className="min-w-full border border-gray-300 text-sm">
+        <thead className="bg-gray-100">
           <tr>
-            <th>ID Materia</th>
-            <th>Materia</th>
-            <th>Grupos</th>
-            <th>Acciones</th>
+            <th className="border px-4 py-2">ID Materia</th>
+            <th className="border px-4 py-2">Materia</th>
+            <th className="border px-4 py-2">Grupos</th>
+            <th className="border px-4 py-2">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {materias.map((m, index) => (
-            <tr key={m.id ?? `row-${index}`}>
-              <td>{m.id}</td>
-              <td>{m.nombre}</td>
-              <td>
+            <tr key={m.id ?? `row-${index}`} className="hover:bg-gray-50">
+              <td className="border px-4 py-2">{m.id}</td>
+              <td className="border px-4 py-2">{m.nombre}</td>
+              <td className="border px-4 py-2 space-y-2">
                 {m.grupos.length === 0 ? (
                   <i>Sin grupos</i>
                 ) : (
                   m.grupos.map((g, gi) => (
-                    <div key={g.id ?? `grupo-${gi}`}>
-                      <strong>{g.id}</strong> – {g.nombre}{' '}
-                      <button onClick={() => editarGrupo(g.id)}>✏️</button>{' '}
-                      <button onClick={() => eliminarGrupo(g.id)}>🗑️</button>{' '}
-                      <button onClick={() => desasignarGrupo(m.id, g.id)}>❌</button>
+                    <div key={g.id ?? `grupo-${gi}`} className="flex flex-wrap items-center gap-2">
+                      <span className="font-semibold">{g.id}</span> – {g.nombre}
+                      <button
+                        onClick={() => editarGrupo(g.id)}
+                        className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 transition"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => eliminarGrupo(g.id)}
+                        className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition"
+                      >
+                        🗑️
+                      </button>
+                      <button
+                        onClick={() => desasignarGrupo(m.id, g.id)}
+                        className="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 transition"
+                      >
+                        ❌
+                      </button>
                     </div>
                   ))
                 )}
               </td>
-              <td>
-                <button onClick={() => editarMateria(m)}>✏️ Editar</button>{' '}
-                <button onClick={() => eliminarMateria(m.id)}>🗑️ Eliminar</button>
+              <td className="border px-4 py-2 space-y-2">
+                <button
+                  onClick={() => editarMateria(m)}
+                  className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 transition"
+                >
+                  ✏️ Editar
+                </button>
+                <button
+                  onClick={() => eliminarMateria(m.id)}
+                  className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition"
+                >
+                  🗑️ Eliminar
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  );
+  </div>
+);
+
 }

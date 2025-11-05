@@ -121,84 +121,104 @@ export default function AsignarHorarioPage() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>📘 Crear Nueva Clase</h2>
-      <div style={{ marginBottom: '1rem' }}>
-        <input
-          type="date"
-          value={fecha}
-          onChange={(e) => setFecha(e.target.value)}
-          style={{ marginRight: '1rem' }}
-        />
-        <select
-          value={idHorario}
-          onChange={(e) => setIdHorario(e.target.value)}
-          style={{ marginRight: '1rem' }}
-        >
-          <option value="">Sin horario (opcional)</option>
-          {horarios.map((h) => (
-            <option key={h.id} value={h.id}>
-              {h.dia} {h.hora_inicial} - {h.hora_final}
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          placeholder="Número de aula"
-          value={numeroAula}
-          onChange={(e) => setNumeroAula(e.target.value)}
-          style={{ marginRight: '1rem' }}
-        />
-        <select
-          value={idPMG}
-          onChange={(e) => setIdPMG(e.target.value)}
-        >
-          <option value="">Seleccionar profesor-materia-grupo</option>
-          {relacionesPMG.map((rel) => (
-            <option key={rel.id} value={rel.id}>
-              {rel.profesor} – {rel.materia} – {rel.grupo}
-            </option>
-          ))}
-        </select>
-      </div>
-      <button onClick={crearClase}>🆕 Crear Clase</button>
+  <div className="p-4 md:p-8">
+    <h2 className="text-2xl font-bold mb-6">📘 Crear Nueva Clase</h2>
 
-      <hr style={{ margin: '2rem 0' }} />
-
-      <h2>🕒 Asignar Horario a Clase</h2>
-      <div style={{ marginBottom: '1rem' }}>
-        <select value={claseSeleccionada} onChange={(e) => setClaseSeleccionada(e.target.value)}>
-          <option value="" disabled>Seleccionar clase</option>
-          {clases.map((clase) => (
-            <option key={clase.id} value={clase.id}>
-              Aula {clase.numero_aula} – ci_docente {clase.ci_profesor}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div style={{ marginBottom: '1rem' }}>
-        <input
-          type="text"
-          placeholder="Día (ej. Lunes)"
-          value={dia}
-          onChange={(e) => setDia(e.target.value)}
-          style={{ marginRight: '1rem' }}
-        />
-        <input
-          type="time"
-          value={horaInicio}
-          onChange={(e) => setHoraInicio(e.target.value)}
-          style={{ marginRight: '1rem' }}
-        />
-        <input
-          type="time"
-          value={horaFin}
-          onChange={(e) => setHoraFin(e.target.value)}
-        />
-      </div>
-
-      <button onClick={asignarHorario}>📎 Asignar Horario</button>
+    <div className="flex flex-col md:flex-row flex-wrap gap-4 mb-6">
+      <input
+        type="date"
+        value={fecha}
+        onChange={(e) => setFecha(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
+      <select
+        value={idHorario}
+        onChange={(e) => setIdHorario(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      >
+        <option value="">Sin horario (opcional)</option>
+        {horarios.map((h) => (
+          <option key={h.id} value={h.id}>
+            {h.dia} {h.hora_inicial} - {h.hora_final}
+          </option>
+        ))}
+      </select>
+      <input
+        type="number"
+        placeholder="Número de aula"
+        value={numeroAula}
+        onChange={(e) => setNumeroAula(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
+      <select
+        value={idPMG}
+        onChange={(e) => setIdPMG(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      >
+        <option value="">Seleccionar profesor-materia-grupo</option>
+        {relacionesPMG.map((rel) => (
+          <option key={rel.id} value={rel.id}>
+            {rel.profesor} – {rel.materia} – {rel.grupo}
+          </option>
+        ))}
+      </select>
     </div>
-  );
+
+    <button
+      onClick={crearClase}
+      className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+      🆕 Crear Clase
+    </button>
+
+    <hr className="my-8 border-t border-gray-300" />
+
+    <h2 className="text-2xl font-bold mb-6">🕒 Asignar Horario a Clase</h2>
+
+    <div className="mb-4">
+      <select
+        value={claseSeleccionada}
+        onChange={(e) => setClaseSeleccionada(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-1/2"
+      >
+        <option value="" disabled>Seleccionar clase</option>
+        {clases.map((clase) => (
+          <option key={clase.id} value={clase.id}>
+            Aula {clase.numero_aula} – ci_docente {clase.ci_profesor}
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <div className="flex flex-col md:flex-row flex-wrap gap-4 mb-6">
+      <input
+        type="text"
+        placeholder="Día (ej. Lunes)"
+        value={dia}
+        onChange={(e) => setDia(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
+      <input
+        type="time"
+        value={horaInicio}
+        onChange={(e) => setHoraInicio(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
+      <input
+        type="time"
+        value={horaFin}
+        onChange={(e) => setHoraFin(e.target.value)}
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
+    </div>
+
+    <button
+      onClick={asignarHorario}
+      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+    >
+      📎 Asignar Horario
+    </button>
+  </div>
+);
+
 }

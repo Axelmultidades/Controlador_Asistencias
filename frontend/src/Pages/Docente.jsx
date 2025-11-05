@@ -101,49 +101,80 @@ export default function DocentesPage() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>📚 Gestión de Docentes</h2>
+  <div className="p-4 md:p-8">
+    <h2 className="text-2xl font-bold mb-6">📚 Gestión de Docentes</h2>
 
-      <RegistroDocente onRegistroExitoso={fetchDocentes} />
+    <RegistroDocente onRegistroExitoso={fetchDocentes} />
 
-      <input
-        type="text"
-        placeholder="Buscar por nombre o CI..."
-        value={buscar}
-        onChange={handleBuscar}
-        style={{ padding: '0.5rem', marginBottom: '1rem', width: '300px' }}
-      />
+    <input
+      type="text"
+      placeholder="Buscar por nombre o CI..."
+      value={buscar}
+      onChange={handleBuscar}
+      className="border rounded px-3 py-2 w-full max-w-md mb-4"
+    />
 
-      <table border="1" cellPadding="8" style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
+    <div className="overflow-x-auto">
+      <table className="min-w-full border border-gray-300 text-sm">
+        <thead className="bg-gray-100">
           <tr>
-            <th>CI</th>
-            <th>Nombre</th>
-            <th>Teléfono</th>
-            <th>Acciones</th>
+            <th className="border px-4 py-2">CI</th>
+            <th className="border px-4 py-2">Nombre</th>
+            <th className="border px-4 py-2">Teléfono</th>
+            <th className="border px-4 py-2">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {docentes.map((d) => (
-            <tr key={d.ci}>
-              <td>{d.ci}</td>
-              <td>{d.nombre}</td>
-              <td>{d.telefono ?? '—'}</td>
-              <td>
-                <button onClick={() => verMaterias(d.ci)}>📘 Ver materias</button>{' '}
-                <button onClick={() => editarDocente(d)}>✏️ Editar</button>{' '}
-                <button onClick={() => eliminarDocente(d.ci)}>🗑️ Eliminar</button>
+            <tr key={d.ci} className="hover:bg-gray-50">
+              <td className="border px-4 py-2">{d.ci}</td>
+              <td className="border px-4 py-2">{d.nombre}</td>
+              <td className="border px-4 py-2">{d.telefono ?? '—'}</td>
+              <td className="border px-4 py-2 space-x-2">
+                <button
+                  onClick={() => verMaterias(d.ci)}
+                  className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition"
+                >
+                  📘 Ver materias
+                </button>
+                <button
+                  onClick={() => editarDocente(d)}
+                  className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 transition"
+                >
+                  ✏️ Editar
+                </button>
+                <button
+                  onClick={() => eliminarDocente(d.ci)}
+                  className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition"
+                >
+                  🗑️ Eliminar
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      <div style={{ marginTop: '1rem' }}>
-        <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>⬅️ Anterior</button>
-        <span style={{ margin: '0 1rem' }}>Página {page} de {lastPage}</span>
-        <button disabled={page === lastPage} onClick={() => setPage(p => p + 1)}>Siguiente ➡️</button>
-      </div>
     </div>
-  );
+
+    <div className="flex items-center justify-center gap-4 mt-6">
+      <button
+        disabled={page === 1}
+        onClick={() => setPage(p => p - 1)}
+        className={`px-4 py-2 rounded ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-600 text-white hover:bg-gray-700'}`}
+      >
+        ⬅️ Anterior
+      </button>
+      <span className="text-sm font-medium">
+        Página {page} de {lastPage}
+      </span>
+      <button
+        disabled={page === lastPage}
+        onClick={() => setPage(p => p + 1)}
+        className={`px-4 py-2 rounded ${page === lastPage ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-600 text-white hover:bg-gray-700'}`}
+      >
+        Siguiente ➡️
+      </button>
+    </div>
+  </div>
+);
 }

@@ -118,71 +118,96 @@ export default function AulasPage() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>🏫 Gestión de Aulas</h2>
+  <div className="p-4 md:p-8">
+    <h2 className="text-2xl font-bold mb-6">🏫 Gestión de Aulas</h2>
 
-      <form onSubmit={registrarAula} style={{ marginBottom: '2rem' }}>
-        <input
-          type="number"
-          placeholder="Número"
-          value={numero}
-          onChange={(e) => setNumero(e.target.value)}
-          required
-          style={{ marginRight: '1rem' }}
-        />
-        <input
-          type="number"
-          placeholder="ID Piso"
-          value={idPiso}
-          onChange={(e) => setIdPiso(e.target.value)}
-          required
-          style={{ marginRight: '1rem' }}
-        />
-        <input
-          type="text"
-          placeholder="Estado"
-          value={estado}
-          onChange={(e) => setEstado(e.target.value)}
-          required
-          style={{ marginRight: '1rem' }}
-        />
-        <button type="submit">Registrar Aula</button>
-      </form>
-
+    <form onSubmit={registrarAula} className="flex flex-col md:flex-row gap-4 mb-6">
+      <input
+        type="number"
+        placeholder="Número"
+        value={numero}
+        onChange={(e) => setNumero(e.target.value)}
+        required
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
+      <input
+        type="number"
+        placeholder="ID Piso"
+        value={idPiso}
+        onChange={(e) => setIdPiso(e.target.value)}
+        required
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
       <input
         type="text"
-        placeholder="Buscar por estado (vacio, ocupado...)"
+        placeholder="Estado"
+        value={estado}
+        onChange={(e) => setEstado(e.target.value)}
+        required
+        className="border rounded px-3 py-2 w-full md:w-auto"
+      />
+      <button
+        type="submit"
+        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+      >
+        Registrar Aula
+      </button>
+    </form>
+
+    <div className="flex flex-col md:flex-row items-start gap-4 mb-6">
+      <input
+        type="text"
+        placeholder="Buscar por estado (vacío, ocupado...)"
         value={estadoBuscar}
         onChange={(e) => setEstadoBuscar(e.target.value)}
-        style={{ marginBottom: '1rem', padding: '0.5rem', width: '300px' }}
+        className="border rounded px-3 py-2 w-full md:w-80"
       />
-      <button onClick={handleBuscar} style={{ marginLeft: '1rem' }}>🔍 Buscar</button>
+      <button
+        onClick={handleBuscar}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+      >
+        🔍 Buscar
+      </button>
+    </div>
 
-      <table border="1" cellPadding="8" style={{ width: '100%', marginTop: '1rem', borderCollapse: 'collapse' }}>
-        <thead>
+    <div className="overflow-x-auto">
+      <table className="min-w-full border border-gray-300 text-sm">
+        <thead className="bg-gray-100">
           <tr>
-            <th>ID</th>
-            <th>Número</th>
-            <th>ID Piso</th>
-            <th>Estado</th>
-            <th>Acciones</th>
+            <th className="border px-4 py-2">ID</th>
+            <th className="border px-4 py-2">Número</th>
+            <th className="border px-4 py-2">ID Piso</th>
+            <th className="border px-4 py-2">Estado</th>
+            <th className="border px-4 py-2">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {aulas.map((aula) => (
-            <tr key={aula.id}>
-              <td>{aula.id}</td>
-              <td>{aula.numero}</td>
-              <td>{aula.id_piso}</td>
-              <td>{aula.estado}</td>
-              <td>
-                <button onClick={() => editarAula(aula)}>✏️ Editar</button>{' '}
-                <button onClick={() => eliminarAula(aula.id)}>🗑️ Eliminar</button>
+            <tr key={aula.id} className="hover:bg-gray-50">
+              <td className="border px-4 py-2">{aula.id}</td>
+              <td className="border px-4 py-2">{aula.numero}</td>
+              <td className="border px-4 py-2">{aula.id_piso}</td>
+              <td className="border px-4 py-2">{aula.estado}</td>
+              <td className="border px-4 py-2 space-x-2">
+                <button
+                  onClick={() => editarAula(aula)}
+                  className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                >
+                  ✏️ Editar
+                </button>
+                <button
+                  onClick={() => eliminarAula(aula.id)}
+                  className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                >
+                  🗑️ Eliminar
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  );
+  </div>
+);
+
 }
