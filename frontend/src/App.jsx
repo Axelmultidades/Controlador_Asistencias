@@ -10,6 +10,8 @@ import DocentesPage from './Pages/Docente';
 import AulasPage from './Pages/Aulas';
 import MateriaGrupoPage from './Pages/Materia_Grupo.jsx';
 import AsignarHorarioPage from './Pages/AsignarHorario.jsx';
+import ImportarUsuarios from './Pages/ImportarUsuarios.jsx';
+import AdministrarUsuario from './Pages/AdministrarUsuario.jsx';
 function App() {
   const [usuario, setUsuario] = useState(null);
 
@@ -40,6 +42,8 @@ function App() {
         <Route path="/docente" element={<DocentesPage />} />
         <Route path="/materia_grupo" element={<MateriaGrupoPage />} />
         <Route path="/asignar_horario" element={<AsignarHorarioPage />} />
+        <Route path="/importar_usuarios" element={<ImportarUsuarios />} />
+        <Route path="/administrar_usuario" element={<AdministrarUsuario />} />
         {/* Login y registro: accesibles solo si no hay sesión */}
         <Route
           path="/login"

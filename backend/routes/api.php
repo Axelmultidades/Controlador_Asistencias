@@ -8,6 +8,9 @@ use App\Http\Controllers\GestionarAulas; // ✅ corregido
 use App\Http\Controllers\HorarioController; // ✅ corregido
 use App\Http\Controllers\GestionarMateriaGrupoController;
 use App\Http\Controllers\ClaseController;
+use App\Http\Controllers\ImportarUsuarioController;
+
+use App\Http\Controllers\AdministrarUsuario;
 // Rutas API para funciones de profesor
 //Route::get('/horario/{ci}', [ProfesorController::class, 'horario']);
 //Route::get('/profesores', [ProfesorController::class, 'index']);
@@ -28,7 +31,8 @@ Route::get('/profesor/{ci}/materias', [GestionarDocenteController::class, 'Docen
 Route::prefix('aula')->group(function () {
     Route::post('/', [GestionarAulas::class, 'store']);
     Route::get('/', [GestionarAulas::class, 'index']);
-    Route::get('/{estado}', [GestionarAulas::class, 'show']);
+    Route::get('/disponibles', [GestionarAulas::class, 'disponibles']);
+    #Route::get('/{estado}', [GestionarAulas::class, 'show']);
     Route::put('/{id}', [GestionarAulas::class, 'update']);
     Route::delete('/{id}', [GestionarAulas::class, 'destroy']);
 });
@@ -75,6 +79,17 @@ Route::prefix('horario')->group(function () {
 Route::get('/clases', [ClaseController::class, 'aula_docente']);
 Route::post('/clases', [ClaseController::class, 'store']);
 Route::get('/clases/profesor-materia-grupo', [ClaseController::class, 'listarRelacionesPMG']);
+//ruta para importar usuarios
+Route::post('/importar-usuarios', [ImportarUsuarioController::class, 'importar']);
+
+
+//rutas para administrar usuarios
+Route::prefix('administrar_usuario')->group(function () {
+    Route::post('/asignar_rol', [AdministrarUsuario::class, 'asignarRol']);
+    Route::post('/crear_rol', [AdministrarUsuario::class, 'crearRol']);
+    Route::get('/listar_usuarios', [AdministrarUsuario::class, 'listarUsuarios']);
+    Route::get('/listar_roles', [AdministrarUsuario::class, 'listarRoles']);
+});
 // Ruta de prueba de conexión a la base de datos
 Route::get('/test-db', function () {
     return \DB::select('SELECT 1 AS test');

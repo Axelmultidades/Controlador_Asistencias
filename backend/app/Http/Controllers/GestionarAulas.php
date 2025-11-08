@@ -122,4 +122,54 @@ class GestionarAulas extends Controller
             'message' => 'Aula eliminada correctamente'
         ]);
     }
+ public function disponibles(Request $request)
+{
+    // Normalizar el día antes de validar
+    $request->merge([
+        'dia' => strtolower($request->input('dia'))
+    ]);
+
+    // Validar entrada
+    $request->validate([
+        'dia'          => 'required|string|in:lunes,martes,miercoles,jueves,viernes,sabado,domingo',
+        'hora_inicio'  => 'required|date_format:H:i',
+        'hora_final'   => 'required|date_format:H:i|after:hora_inicio',
+    ]);
+
+    $dia          = $request->dia;
+    $hora_inicio  = $request->hora_inicio;
+    $hora_final   = $request->hora_final;
+
+    // Buscar horarios que se cruzan con el rango solicitado
+    $horarios_ocupados = DB::table('horario')
+        ->whereRaw('LOWER(dia) = ?', [$dia])
+        ->where(function ($query) use ($hora_inicio, $hora_final) {
+            $query->whereBetween('hora_inicial', [$hora_inicio, $hora_final])
+                  ->orWhereBetween('hora_final', [$hora_inicio, $hora_final])
+                  ->orWhere(function ($q) use ($hora_inicio, $hora_final) {
+                      $q->where('hora_inicial', '<=', $hora_inicio)
+                        ->where('hora_final', '>=', $hora_final);
+                  });
+        })
+        ->pluck('id');
+
+    // Buscar aulas ocupadas en esos horarios
+    $aulas_ocupadas = DB::table('clase')
+        ->whereIn('id_horario', $horarios_ocupados)
+        ->pluck('id_aula');
+
+    // Devolver aulas no ocupadas
+    $aulas_disponibles = DB::table('aula')
+        ->whereNotIn('id', $aulas_ocupadas)
+        ->orderBy('numero')
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $aulas_disponibles
+    ]);
+}
+
+
+
 }
