@@ -67,7 +67,7 @@ Route::prefix('horario')->group(function () {
     
     Route::post('/', [HorarioController::class, 'asignarHorario']); // CU06 + CU07: Asignar horario a clase
     Route::get('/', [HorarioController::class, 'index']); // Listar todos los horarios
-    Route::get('/profesor/{ci}', [HorarioController::class, 'porProfesores']); // Listar horarios con nombres de profesores
+    Route::get('/profesor/{ci}', [HorarioController::class, 'porProfesor']); // Listar horarios con nombres de profesores
     Route::get('/docente/{ci}', [HorarioController::class, 'porDocente']); // Ver horarios por docente
     Route::get('/grupo/{grupo_id}', [HorarioController::class, 'porGrupo']); // Ver horarios por grupo
     Route::get('/aula/{aula_id}', [HorarioController::class, 'porAula']); // Ver horarios por aula

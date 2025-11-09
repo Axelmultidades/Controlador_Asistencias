@@ -21,7 +21,7 @@ class ClaseController extends Controller
     $request->validate([
         'id_profesor_materia_grupo' => 'required|integer',
         'numero_aula' => 'required|integer|exists:aula,numero',
-        'fecha' => 'required|date',
+        'fecha' => 'nullable|date',
         'id_horario' => 'nullable|exists:horario,id',
     ]);
 

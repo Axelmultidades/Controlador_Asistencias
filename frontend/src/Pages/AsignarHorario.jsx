@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-
+import React from 'react';
+import List_horarios from '../componentes/AsignarHorario/Listar_horarios.jsx';
 export default function AsignarHorarioPage() {
   const [clases, setClases] = useState([]);
   const [horarios, setHorarios] = useState([]);
@@ -54,7 +55,7 @@ export default function AsignarHorarioPage() {
   }, []);
 
   const crearClase = async () => {
-    if (!fecha || !idPMG || !numeroAula) {
+    if ( !idPMG || !numeroAula) {
       alert('Completa los campos obligatorios');
       return;
     }
@@ -125,24 +126,6 @@ export default function AsignarHorarioPage() {
     <h2 className="text-2xl font-bold mb-6">📘 Crear Nueva Clase</h2>
 
     <div className="flex flex-col md:flex-row flex-wrap gap-4 mb-6">
-      <input
-        type="date"
-        value={fecha}
-        onChange={(e) => setFecha(e.target.value)}
-        className="border rounded px-3 py-2 w-full md:w-auto"
-      />
-      <select
-        value={idHorario}
-        onChange={(e) => setIdHorario(e.target.value)}
-        className="border rounded px-3 py-2 w-full md:w-auto"
-      >
-        <option value="">Sin horario (opcional)</option>
-        {horarios.map((h) => (
-          <option key={h.id} value={h.id}>
-            {h.dia} {h.hora_inicial} - {h.hora_final}
-          </option>
-        ))}
-      </select>
       <input
         type="number"
         placeholder="Número de aula"
@@ -218,6 +201,8 @@ export default function AsignarHorarioPage() {
     >
       📎 Asignar Horario
     </button>
+    <hr className="my-8 border-t border-gray-300" />
+    <List_horarios />
   </div>
 );
 

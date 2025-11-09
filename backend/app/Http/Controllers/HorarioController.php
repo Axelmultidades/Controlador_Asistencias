@@ -18,12 +18,23 @@ class HorarioController extends Controller
             'hora_fin' => 'required|date_format:H:i|after:hora_inicio', // Hora de fin debe ser posterior
         ]);
 
-        // ✅ Crear el nuevo horario en la tabla 'horario'
-        $horario_id = DB::table('horario')->insertGetId([
-            'hora_inicial' => $request->hora_inicio,
-            'hora_final' => $request->hora_fin,
-            'dia' => $request->dia,
+        // 🔍 Verificar si el horario ya existe
+    $horarioExistente = DB::table('horario')
+        ->where('dia', $request->dia)
+        ->where('hora_inicial', $request->hora_inicio)
+        ->where('hora_final', $request->hora_fin)
+        ->first();
+
+    if ($horarioExistente) {
+        $horario_id = $horarioExistente->id;
+    } else {
+    // ✅ Crear el nuevo horario si no existe
+    $horario_id = DB::table('horario')->insertGetId([
+        'hora_inicial' => $request->hora_inicio,
+        'hora_final' => $request->hora_fin,
+        'dia' => $request->dia,
         ]);
+    }
 
         // 🔍 Obtener la clase a la que se asignará el horario
         $clase = DB::table('clase')->where('id', $request->clase_id)->first();
@@ -107,19 +118,37 @@ class HorarioController extends Controller
     {
         $horarios = DB::table('clase')
             ->join('horario', 'clase.id_horario', '=', 'horario.id')
-            ->join('profesor', 'clase.ci_profesor', '=', 'profesor.ci')
-            ->join('profesor_materia', 'profesor.ci', '=', 'profesor_materia.ci_profesor')
+            ->join('profesor_materia_grupo', 'clase.id_profesor_materia_grupo', '=', 'profesor_materia_grupo.id')
+            ->join('profesor_materia', 'profesor_materia_grupo.id_profesor_materia', '=', 'profesor_materia.id')
+            ->join('profesor', 'profesor_materia.ci_profesor', '=', 'profesor.ci')
             ->join('materia', 'profesor_materia.id_materia', '=', 'materia.id')
-            ->where('clase.ci_profesor', $ci)
+            ->join('grupo', 'profesor_materia_grupo.id_grupo', '=', 'grupo.id')
+            ->join('aula', 'clase.id_aula', '=', 'aula.id')
+            ->where('profesor.ci', $ci)
             ->select(
                 'horario.dia',
                 'horario.hora_inicial',
                 'horario.hora_final',
                 'materia.nombre as materia',
-                'profesor.nombre as profesor'
+                'profesor.nombre as profesor',
+                'grupo.nombre as grupo',
+                'aula.numero as aula',
             )
-            ->get();
+            ->orderByRaw("
+            CASE horario.dia
+                WHEN 'lunes' THEN 1
+                WHEN 'martes' THEN 2
+                WHEN 'miercoles' THEN 3
+                WHEN 'jueves' THEN 4
+                WHEN 'viernes' THEN 5
+                WHEN 'sabado' THEN 6
+                WHEN 'domingo' THEN 7
+                ELSE 8
+            END
+        ")
+        ->orderBy('horario.hora_inicial')
+        ->get();
 
-        return response()->json($horarios);
+    return response()->json($horarios);
     }
 }

@@ -12,6 +12,7 @@ import MateriaGrupoPage from './Pages/Materia_Grupo.jsx';
 import AsignarHorarioPage from './Pages/AsignarHorario.jsx';
 import ImportarUsuarios from './Pages/ImportarUsuarios.jsx';
 import AdministrarUsuario from './Pages/AdministrarUsuario.jsx';
+import Horario_semanal from './Pages/Horario_semanal.jsx';
 function App() {
   const [usuario, setUsuario] = useState(null);
 
@@ -44,6 +45,7 @@ function App() {
         <Route path="/asignar_horario" element={<AsignarHorarioPage />} />
         <Route path="/importar_usuarios" element={<ImportarUsuarios />} />
         <Route path="/administrar_usuario" element={<AdministrarUsuario />} />
+        <Route path="/horario_semanal" element={<Horario_semanal />} />
         {/* Login y registro: accesibles solo si no hay sesión */}
         <Route
           path="/login"
