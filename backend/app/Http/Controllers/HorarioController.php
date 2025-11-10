@@ -33,7 +33,7 @@ class HorarioController extends Controller
         'hora_inicial' => $request->hora_inicio,
         'hora_final' => $request->hora_fin,
         'dia' => $request->dia,
-        ]);
+    ]);
     }
 
         // 🔍 Obtener la clase a la que se asignará el horario

@@ -13,6 +13,9 @@ import AsignarHorarioPage from './Pages/AsignarHorario.jsx';
 import ImportarUsuarios from './Pages/ImportarUsuarios.jsx';
 import AdministrarUsuario from './Pages/AdministrarUsuario.jsx';
 import Horario_semanal from './Pages/Horario_semanal.jsx';
+import Asistencia from './Pages/Asistencia.jsx';
+
+import RegistrarAsistencia from './componentes/Asistencia/RegistrarAsistencia.jsx';
 function App() {
   const [usuario, setUsuario] = useState(null);
 
@@ -46,6 +49,8 @@ function App() {
         <Route path="/importar_usuarios" element={<ImportarUsuarios />} />
         <Route path="/administrar_usuario" element={<AdministrarUsuario />} />
         <Route path="/horario_semanal" element={<Horario_semanal />} />
+        <Route path="/asistencia" element={<Asistencia />} />
+        <Route path="/registro_docente" element={<RegistrarAsistencia usuario={usuario} />} />
         {/* Login y registro: accesibles solo si no hay sesión */}
         <Route
           path="/login"

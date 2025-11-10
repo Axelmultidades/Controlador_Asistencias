@@ -21,13 +21,14 @@ class ClaseController extends Controller
     $request->validate([
         'id_profesor_materia_grupo' => 'required|integer',
         'numero_aula' => 'required|integer|exists:aula,numero',
-        'fecha' => 'nullable|date',
         'id_horario' => 'nullable|exists:horario,id',
     ]);
 
     // Buscar el ID del aula por su número
     $aula = DB::table('aula')->where('numero', $request->numero_aula)->first();
 
+    //buscar id de gestion activo
+    $gestin_activo = DB::table('gestion')->where('estado', 'activo')->first();
     if (!$aula) {
         return response()->json([
             'success' => false,
@@ -39,9 +40,15 @@ class ClaseController extends Controller
     $clase_id = DB::table('clase')->insertGetId([
         'id_profesor_materia_grupo' => $request->id_profesor_materia_grupo,
         'id_aula' => $aula->id,
-        'fecha' => $request->fecha,
         'id_horario' => $request->id_horario,
+        'id_gestion' => $gestin_activo->id,
     ]);
+
+    //asistencia create
+    DB::table('asistencia')->insertGetId([
+        'id_clase' => $clase_id,
+    ]);
+    
 
     return response()->json([
         'success' => true,

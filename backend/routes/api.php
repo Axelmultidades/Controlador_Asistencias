@@ -11,6 +11,7 @@ use App\Http\Controllers\ClaseController;
 use App\Http\Controllers\ImportarUsuarioController;
 
 use App\Http\Controllers\AdministrarUsuario;
+use App\Http\Controllers\AsistenciaController;
 // Rutas API para funciones de profesor
 //Route::get('/horario/{ci}', [ProfesorController::class, 'horario']);
 //Route::get('/profesores', [ProfesorController::class, 'index']);
@@ -90,6 +91,10 @@ Route::prefix('administrar_usuario')->group(function () {
     Route::get('/listar_usuarios', [AdministrarUsuario::class, 'listarUsuarios']);
     Route::get('/listar_roles', [AdministrarUsuario::class, 'listarRoles']);
 });
+
+// Ruta para generar y mostrar el código QR para asistencia
+Route::get('/qr', [AsistenciaController::class, 'qr']);
+Route::post('/asistencia/docente', [AsistenciaController::class, 'registrar']);
 // Ruta de prueba de conexión a la base de datos
 Route::get('/test-db', function () {
     return \DB::select('SELECT 1 AS test');

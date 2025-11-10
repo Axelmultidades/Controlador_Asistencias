@@ -46,7 +46,7 @@ class GestionarMateriaGrupoController extends Controller
 
         // Verificar si ya está asignado
         $existe = DB::table('profesor_materia_grupo')
-            ->where('id_profesor_materia_grupo', $id_profesor_materia)
+            ->where('id_profesor_materia', $id_profesor_materia)
             ->where('id_grupo', $grupo_id)
             ->exists();
 
@@ -59,7 +59,7 @@ class GestionarMateriaGrupoController extends Controller
 
         // Asignar grupo a la relación
         DB::table('profesor_materia_grupo')->insert([
-            'id_profesor_materia_grupo' => $id_profesor_materia,
+            'id_profesor_materia' => $id_profesor_materia,
             'id_grupo' => $grupo_id,
         ]);
 
@@ -126,7 +126,7 @@ class GestionarMateriaGrupoController extends Controller
     public function desasignarGrupo($id_profesor_materia, $id_grupo)
     {
         DB::table('profesor_materia_grupo')
-            ->where('id_profesor_materia_grupo', $id_profesor_materia)
+            ->where('id_profesor_materia', $id_profesor_materia)
             ->where('id_grupo', $id_grupo)
             ->delete();
 
