@@ -76,32 +76,6 @@ class AsistenciaController extends Controller
     return response()->json(['message' => 'Asistencia registrada dentro del margen de tolerancia']);
 }
 
-public function handle()
-{
-    $fechaHoy = Carbon::now()->toDateString();
 
-    // Buscar clases del día actual
-    $clasesHoy = DB::table('clase')
-        ->join('horario', 'clase.id_horario', '=', 'horario.id')
-        ->where('horario.dia', ucfirst(Carbon::now()->locale('es')->dayName))
-        ->pluck('clase.id');
-
-    foreach ($clasesHoy as $idClase) {
-        $existe = DB::table('asistencia')
-            ->where('id_clase', $idClase)
-            ->whereDate('fecha', $fechaHoy)
-            ->exists();
-
-        if (!$existe) {
-            DB::table('asistencia')->insert([
-                'id_clase' => $idClase,
-                'fecha' => $fechaHoy,
-                'estado' => 'ausente',
-            ]);
-        }
-    }
-
-    return response()->json(['message' => 'marcar asistencia automatica finalizado']);
-}
 
 }
