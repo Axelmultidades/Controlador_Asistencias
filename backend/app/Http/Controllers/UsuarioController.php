@@ -19,8 +19,17 @@ class UsuarioController extends Controller
             // Guardar el ID del usuario en la sesión
             session(['usuario_id' => $usuario->id]);
 
+            $rol = DB::table('usuario_rol')
+            ->join('rol', 'usuario_rol.id_rol', '=', 'rol.id')
+            ->where('usuario_rol.id_usuario', $usuario->id)
+            ->pluck('rol.nombre'); // devuelve una colección
+
             // Devolver datos del usuario
-            return response()->json(['success' => true, 'usuario' => $usuario]);
+            return response()->json([
+                'success' => true, 
+                'usuario' => $usuario,
+                'rol'=> $rol,
+            ]);
         }
 
         // Si las credenciales no coinciden, devolver error 401
