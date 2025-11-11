@@ -8,9 +8,6 @@ export default function AsignarMateria() {
 
   const API_URL = import.meta.env.VITE_API_URL;
 
-  // =====================
-  // Fetchers
-  // =====================
   const fetchProfesores = async () => {
     try {
       const res = await fetch(`${API_URL}/api/profesor`);
@@ -37,9 +34,6 @@ export default function AsignarMateria() {
     fetchMaterias();
   }, []);
 
-  // =====================
-  // Asignar materia
-  // =====================
   const asignarMateria = async () => {
     if (!profesorSeleccionado || !materiaSeleccionada) {
       alert('Seleccione un profesor y una materia');
@@ -51,7 +45,7 @@ export default function AsignarMateria() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id_profesor: profesorSeleccionado,
+          ci_profesor: profesorSeleccionado,
           id_materia: materiaSeleccionada,
         }),
       });
@@ -70,41 +64,51 @@ export default function AsignarMateria() {
     }
   };
 
-  // =====================
-  // Render
-  // =====================
   return (
-    <div style={{ padding: '2rem' }}>
-      <h3>📎 Asignar Materia a Profesor</h3>
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-md mt-10">
+      <h3 className="text-2xl font-semibold mb-6 text-gray-800 flex items-center gap-2">
+        📎 Asignar Materia a Profesor
+      </h3>
 
-      <div style={{ marginBottom: '1rem' }}>
-        <select
-          value={profesorSeleccionado}
-          onChange={(e) => setProfesorSeleccionado(e.target.value)}
-          style={{ marginRight: '1rem' }}
+      <div className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">👨‍🏫 Profesor</label>
+          <select
+            value={profesorSeleccionado}
+            onChange={(e) => setProfesorSeleccionado(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" disabled>Seleccionar Profesor</option>
+            {profesores.map((p) => (
+              <option key={p.ci} value={p.ci}>
+                {p.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">📘 Materia</label>
+          <select
+            value={materiaSeleccionada}
+            onChange={(e) => setMateriaSeleccionada(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="" disabled>Seleccionar Materia</option>
+            {materias.map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          onClick={asignarMateria}
+          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
         >
-          <option value="">👨‍🏫 Seleccionar Profesor</option>
-          {profesores.map((p) => (
-            <option key={p.ci} value={p.ci}>
-              {p.nombre}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={materiaSeleccionada}
-          onChange={(e) => setMateriaSeleccionada(e.target.value)}
-          style={{ marginRight: '1rem' }}
-        >
-          <option value="">📘 Seleccionar Materia</option>
-          {materias.map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.nombre}
-            </option>
-          ))}
-        </select>
-
-        <button onClick={asignarMateria}>✅ Asignar</button>
+          ✅ Asignar
+        </button>
       </div>
     </div>
   );

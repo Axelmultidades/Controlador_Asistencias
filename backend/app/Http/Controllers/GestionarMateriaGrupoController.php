@@ -233,7 +233,7 @@ class GestionarMateriaGrupoController extends Controller
 {
     // Validar entrada
     $request->validate([
-        'ci_profesor' => 'required|integer|exists:profesor,id',
+        'ci_profesor' => 'required|integer|exists:profesor,ci',
         'id_materia' => 'required|integer|exists:materia,id',
     ]);
 

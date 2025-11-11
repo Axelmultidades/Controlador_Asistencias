@@ -1,4 +1,5 @@
 <?php
+// backend/config/cors.php
 return [
     'paths' => ['api/*'],
     'allowed_methods' => ['*'],

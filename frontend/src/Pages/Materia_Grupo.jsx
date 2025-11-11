@@ -291,6 +291,8 @@ export default function MateriaGrupoPage() {
         </tbody>
       </table>
     </div>
+    <hr className="my-8" />
+    <AsignarMateria />
   </div>
 );
 

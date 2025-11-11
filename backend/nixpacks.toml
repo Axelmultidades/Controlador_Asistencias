@@ -1,0 +1,17 @@
+[phases.setup]
+nixpkgs = [
+  "php",
+  "phpPackages.composer",
+  "phpPackages.gd",
+  "phpPackages.pdo",
+  "phpPackages.pdo_pgsql",
+  "phpPackages.redis"
+]
+
+[phases.build]
+cmds = [
+  "composer install --optimize-autoloader --no-scripts --no-interaction"
+]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
