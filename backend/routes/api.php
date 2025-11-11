@@ -9,7 +9,7 @@ use App\Http\Controllers\HorarioController; // ✅ corregido
 use App\Http\Controllers\GestionarMateriaGrupoController;
 use App\Http\Controllers\ClaseController;
 use App\Http\Controllers\ImportarUsuarioController;
-
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\AdministrarUsuario;
 use App\Http\Controllers\AsistenciaController;
 // Rutas API para funciones de profesor
@@ -82,6 +82,8 @@ Route::post('/clases', [ClaseController::class, 'store']);
 Route::get('/clases/profesor-materia-grupo', [ClaseController::class, 'listarRelacionesPMG']);
 //ruta para importar usuarios
 Route::post('/importar-usuarios', [ImportarUsuarioController::class, 'importar']);
+//exportar reportes de asistencia
+Route::get('/exportar-reporte', [ReporteController::class, 'exportar']);
 
 
 //rutas para administrar usuarios

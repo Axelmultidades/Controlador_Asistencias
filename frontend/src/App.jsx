@@ -12,6 +12,7 @@ import AulasPage from './Pages/Aulas';
 import MateriaGrupoPage from './Pages/Materia_Grupo.jsx';
 import AsignarHorarioPage from './Pages/AsignarHorario.jsx';
 import ImportarUsuarios from './Pages/ImportarUsuarios.jsx';
+import ReporteAsistencia from './Pages/Reportes.jsx';
 import AdministrarUsuario from './Pages/AdministrarUsuario.jsx';
 import Horario_semanal from './Pages/Horario_semanal.jsx';
 import Asistencia from './Pages/Asistencia.jsx';
@@ -76,7 +77,7 @@ function App() {
           <Route path="/importar_usuarios" element={<ImportarUsuarios />} />
           <Route path="/administrar_usuario" element={<AdministrarUsuario />} />
           <Route path="/registrar_asistencia" element={<RegistrarAsistencia usuario={usuario} />} />
-
+          <Route path="/reporte_asistencia" element={<ReporteAsistencia />} />
           {/* Rutas protegidas por rol */}
           <Route
             path="/docente"

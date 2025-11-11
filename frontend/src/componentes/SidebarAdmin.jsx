@@ -21,6 +21,7 @@ export default function SidebarAdmin({ abierto, toggle }) {
           <Link to="/materia_grupo" className="hover:text-blue-600">Materia y Grupo</Link>
           <Link to="/asignar_horario" className="hover:text-blue-600">Asignar Horario</Link>
           <Link to="/importar_usuarios" className="hover:text-blue-600">Importar Usuarios</Link>
+          <Link to="/reporte_asistencia" className="hover:text-blue-600">Reporte</Link>
           <Link to="/administrar_usuario" className="hover:text-blue-600">Administrar Usuarios</Link>
         </nav>
       )}
