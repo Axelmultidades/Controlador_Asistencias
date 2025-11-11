@@ -4,6 +4,7 @@ function AsignarRol() {
   const [form, setForm] = useState({
     user_id: '',
     rol: '',
+    ci: '',
   });
   const [usuarios, setUsuarios] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -40,6 +41,12 @@ function AsignarRol() {
     setMensaje('');
     setError('');
 
+    // Validar CI si el rol es profesor
+    if (form.rol === 'profesor' && !form.ci.trim()) {
+      setError('❌ Debes ingresar el CI del profesor');
+      return;
+    }
+
     try {
       const res = await fetch(`${API_URL}/api/administrar_usuario/asignar_rol`, {
         method: 'POST',
@@ -54,7 +61,7 @@ function AsignarRol() {
       }
 
       setMensaje(`✅ Rol asignado correctamente a ${data.user.nombre}`);
-      setForm({ user_id: '', rol: '' });
+      setForm({ user_id: '', rol: '', ci: '' });
     } catch (err) {
       setError(`❌ ${err.message}`);
     }
@@ -93,6 +100,21 @@ function AsignarRol() {
             </option>
           ))}
         </select>
+
+        {form.rol === 'profesor' && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700">CI del profesor</label>
+            <input
+              type="number"
+              name="ci"
+              value={form.ci}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded mt-1"
+              required
+            />
+            <p className="text-sm text-gray-500 mt-1">Este campo es obligatorio para el rol profesor</p>
+          </div>
+        )}
 
         <button
           type="submit"

@@ -7,12 +7,19 @@ use Illuminate\Support\Facades\DB;
 class AdministrarUsuario extends Controller
 {
     //asignar roles a los usuarios
-    function asignarRol(Request $request)
+    public function asignarRol(Request $request)
 {
     $request->validate([
         'user_id' => 'required|integer|exists:usuario,id',
         'rol' => 'required|string|exists:rol,nombre',
+        'ci' => 'nullable|integer',
     ]);
+
+    if ($request->rol === 'profesor') {
+        $request->validate([
+            'ci' => 'required|integer|exists:profesor,ci',
+        ]);
+    }
 
     $role = DB::table('rol')->where('nombre', $request->rol)->first();
 
@@ -53,6 +60,7 @@ class AdministrarUsuario extends Controller
         'roles' => $roles
     ]);
 }
+
 
     //crear rol
     function crearRol(Request $request){
