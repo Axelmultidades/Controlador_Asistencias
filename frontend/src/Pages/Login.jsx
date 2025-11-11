@@ -8,21 +8,24 @@ function Login({ onLogin }) {
   const [mensaje, setMensaje] = useState('');
 
   const handleLogin = async () => {
-    try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/login`, {
-        codigo: parseInt(codigo),
-        password
-      }, { withCredentials: true });
+  try {
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/login`, {
+      codigo: parseInt(codigo),
+      password
+    }, { withCredentials: true });
 
-      onLogin(response.data.usuario);
-      setMensaje('Inicio de sesión exitoso');
-      setCodigo('');
-      setPassword('');
-    } catch (err) {
-      const msg = err.response?.data?.message || 'Credenciales inválidas';
-      setMensaje('Error al iniciar sesión: ' + msg);
-    }
-  };
+    const usuario = response.data.usuario;
+    usuario.roles = response.data.rol; // 👈 Añadir los roles al objeto usuario
+    console.log('Usuario logueado:', usuario);
+    onLogin(usuario); // guarda en localStorage desde App.jsx
+    setMensaje('Inicio de sesión exitoso');
+    setCodigo('');
+    setPassword('');
+  } catch (err) {
+    const msg = err.response?.data?.message || 'Credenciales inválidas';
+    setMensaje('Error al iniciar sesión: ' + msg);
+  }
+};
 
   return (
   <div className="flex h-screen bg-cover bg-center text-white" style={{ backgroundImage: "url('/imagenes/fondo.png')" }}>

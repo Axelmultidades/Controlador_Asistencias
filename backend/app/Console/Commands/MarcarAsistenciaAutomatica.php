@@ -37,8 +37,8 @@ class MarcarAsistenciaAutomatica extends Command
     foreach ($clasesHoy as $idClase) {
         $existe = DB::table('asistencia')
             ->where('id_clase', $idClase)
-            //verificar si estado = 'presente'
-            ->where('estado', 'presente')
+            //verificar si la fecha es null
+            ->whereDate('fecha', null)
             ->exists();
 
         if ($existe) {
