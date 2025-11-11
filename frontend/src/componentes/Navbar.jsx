@@ -14,34 +14,6 @@ function Navbar({ usuario, onLogout }) {
 
       {usuario ? (
         <>
-          {esAdmin && (
-            <>
-              <Link
-                to="/aulas"
-                className="text-gray-800 font-semibold px-3 py-1 rounded hover:bg-gray-300 transition whitespace-nowrap"
-              >
-                Aulas
-              </Link>
-              <Link
-                to="/docente"
-                className="text-gray-800 font-semibold px-3 py-1 rounded hover:bg-gray-300 transition whitespace-nowrap"
-              >
-                Docentes
-              </Link>
-              <Link
-                to="/materia_grupo"
-                className="text-gray-800 font-semibold px-3 py-1 rounded hover:bg-gray-300 transition whitespace-nowrap"
-              >
-                Materia y Grupo
-              </Link>
-              <Link
-                to="/asignar_horario"
-                className="text-gray-800 font-semibold px-3 py-1 rounded hover:bg-gray-300 transition whitespace-nowrap"
-              >
-                Asignar Horario
-              </Link>
-            </>
-          )}
             {esprofesor && (
               <>
               <Link

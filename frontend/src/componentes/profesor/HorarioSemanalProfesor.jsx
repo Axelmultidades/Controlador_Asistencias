@@ -7,6 +7,7 @@ export default function HorarioSemanalProfesor({ ci }) {
   const [horarios, setHorarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const API_URL = import.meta.env.VITE_API_URL;  
+  console.log('CI recibido en HorarioSemanalProfesor:', ci);
   useEffect(() => {
     axios.get(`${API_URL}/api/horario/profesor/${ci}`)
       .then(res => {

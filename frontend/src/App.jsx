@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import List_profesor from './Pages/List_profesor';
 import HorarioPage from './Pages/Horario_page';
 import NavBar from './componentes/Navbar';
+import SidebarAdmin from './componentes/SidebarAdmin';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Home from './Pages/Home';
@@ -33,6 +34,7 @@ function ProtectedRoute({ usuario, requiredRole, children }) {
 function App() {
   const [usuario, setUsuario] = useState(null);
   const [cargandoSesion, setCargandoSesion] = useState(true);
+  const [sidebarAbierto, setSidebarAbierto] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('usuario');
@@ -56,63 +58,69 @@ function App() {
     return <div className="text-center py-10">Cargando sesión...</div>;
   }
 
+  const esAdmin = usuario?.roles?.includes('administrador');
+
   return (
     <Router>
       <NavBar usuario={usuario} setUsuario={setUsuario} onLogout={handleLogout} />
-      <Routes>
-        {/* Página principal pública */}
-        <Route path="/" element={<Home />} />
-        <Route path="/aulas" element={<AulasPage />} />
-        <Route path="/materia_grupo" element={<MateriaGrupoPage />} />
-        <Route path="/asignar_horario" element={<AsignarHorarioPage />} />
-        <Route path="/importar_usuarios" element={<ImportarUsuarios />} />
-        <Route path="/administrar_usuario" element={<AdministrarUsuario />} />
-        <Route path="/registrar_asistencia" element={<RegistrarAsistencia usuario={usuario}  />} />
+      {esAdmin && (
+        <SidebarAdmin abierto={sidebarAbierto} toggle={() => setSidebarAbierto(prev => !prev)} />
+      )}
+      <div className={`p-4 transition-all duration-300 ${esAdmin && sidebarAbierto ? 'ml-48' : ''}`}>
+        <Routes>
+          {/* Página principal pública */}
+          <Route path="/" element={<Home />} />
+          <Route path="/aulas" element={<AulasPage />} />
+          <Route path="/materia_grupo" element={<MateriaGrupoPage />} />
+          <Route path="/asignar_horario" element={<AsignarHorarioPage />} />
+          <Route path="/importar_usuarios" element={<ImportarUsuarios />} />
+          <Route path="/administrar_usuario" element={<AdministrarUsuario />} />
+          <Route path="/registrar_asistencia" element={<RegistrarAsistencia usuario={usuario} />} />
 
-        {/* Rutas protegidas por rol */}
-        <Route
-          path="/docente"
-          element={
-            <ProtectedRoute usuario={usuario} requiredRole="profesor">
-              <DocentesPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/horario_semanal"
-          element={
-            <ProtectedRoute usuario={usuario} requiredRole="profesor">
-              <Horario_semanal usuario={usuario} />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/asistencia"
-          element={
-            <ProtectedRoute usuario={usuario} requiredRole="profesor">
-              <Asistencia />
-            </ProtectedRoute>
-          }
-        />
-        
+          {/* Rutas protegidas por rol */}
+          <Route
+            path="/docente"
+            element={
+              <ProtectedRoute usuario={usuario} requiredRole="administrador">
+                <DocentesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/horario_semanal"
+            element={
+              <ProtectedRoute usuario={usuario} requiredRole="profesor">
+                <Horario_semanal usuario={usuario} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/asistencia"
+            element={
+              <ProtectedRoute usuario={usuario} requiredRole="profesor">
+                <Asistencia />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Login y registro: accesibles solo si no hay sesión */}
-        <Route
-          path="/login"
-          element={
-            usuario ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            usuario ? <Navigate to="/" /> : <Register />
-          }
-        />
+          {/* Login y registro: accesibles solo si no hay sesión */}
+          <Route
+            path="/login"
+            element={
+              usuario ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              usuario ? <Navigate to="/" /> : <Register />
+            }
+          />
 
-        {/* Ruta por defecto */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+          {/* Ruta por defecto */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
