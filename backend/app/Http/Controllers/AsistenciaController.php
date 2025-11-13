@@ -12,7 +12,7 @@ class AsistenciaController extends Controller
 {
     public function qr()
 {
-    $url = 'http://localhost:5173/registro_docente'; // o tu URL de React
+    $url = 'https://controladorasistencias-production-96e7.up.railway.app/registro_docente'; // o tu URL de React
     $qr = QrCode::format('svg')->size(300)->generate($url);
 
     return response($qr)->header('Content-Type', 'image/svg+xml');

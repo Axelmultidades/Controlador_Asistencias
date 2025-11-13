@@ -85,8 +85,8 @@ class ImportarUsuarioController extends Controller
             }
             // Asignar el rol al usuario
             DB::table('usuario_rol')->updateOrInsert([
-            'usuario_id' => $usuario_id,
-            'rol_id'     => $rol_id,
+            'id_usuario' => $usuario_id,
+            'id_rol'     => $rol_id,
             ]);
         }
 

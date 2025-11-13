@@ -54,7 +54,7 @@ class UsuarioController extends Controller
             $request->validate([
                 'username' => 'required',                          // nombre de usuario obligatorio
                 'password' => 'required|min:6',                    // contraseña mínima de 6 caracteres
-                'codigo' => 'required|integer|unique:usuario'      // código único y obligatorio
+                'codigo' => 'required|integer|unique:usuario,codigo'      // código único y obligatorio
             ]);
 
             // Insertar usuario en la base de datos con contraseña encriptada

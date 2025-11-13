@@ -31,6 +31,7 @@ class MarcarAsistenciaAutomatica extends Command
     // Buscar clases del día actual
     $clasesHoy = DB::table('clase')
         ->join('horario', 'clase.id_horario', '=', 'horario.id')
+        ->where('clase.fecha',$fechaHoy)
         ->where('horario.dia', ucfirst(Carbon::now()->locale('es')->dayName))
         ->pluck('clase.id');
 
@@ -38,7 +39,7 @@ class MarcarAsistenciaAutomatica extends Command
         $existe = DB::table('asistencia')
             ->where('id_clase', $idClase)
             //verificar si la fecha es null
-            ->whereDate('fecha', null)
+            ->whereNull('fecha')
             ->exists();
 
         if ($existe) {

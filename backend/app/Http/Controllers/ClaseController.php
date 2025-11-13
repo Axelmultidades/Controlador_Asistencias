@@ -22,6 +22,7 @@ class ClaseController extends Controller
         'id_profesor_materia_grupo' => 'required|integer',
         'numero_aula' => 'required|integer|exists:aula,numero',
         'id_horario' => 'nullable|exists:horario,id',
+        'fecha' =>'nullable|date'
     ]);
 
     // Buscar el ID del aula por su número
@@ -42,6 +43,7 @@ class ClaseController extends Controller
         'id_aula' => $aula->id,
         'id_horario' => $request->id_horario,
         'id_gestion' => $gestin_activo->id,
+        'fecha' => $request->fecha,
     ]);
 
     //asistencia create

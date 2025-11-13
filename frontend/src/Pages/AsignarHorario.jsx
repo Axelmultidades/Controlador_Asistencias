@@ -65,7 +65,7 @@ export default function AsignarHorarioPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fecha,
+          fecha: fecha|| null,
           id_profesor_materia_grupo: idPMG,
           id_horario: idHorario || null,
           numero_aula: numeroAula,
@@ -126,6 +126,13 @@ export default function AsignarHorarioPage() {
     <h2 className="text-2xl font-bold mb-6">📘 Crear Nueva Clase</h2>
 
     <div className="flex flex-col md:flex-row flex-wrap gap-4 mb-6">
+      <input
+          type="date"
+          placeholder="Fecha (opcional)"
+          value={fecha}
+          onChange={(e) => setFecha(e.target.value)}
+          className="border rounded px-3 py-2 w-full md:w-auto"
+        />
       <input
         type="number"
         placeholder="Número de aula"
